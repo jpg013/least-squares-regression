@@ -1,0 +1,34 @@
+{
+  "name": "least-squares-regression",
+  "version": "0.1.0",
+  "description": "Module that calculates ordinary least squares regression.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint *.js",
+    "lint:fix": "npx eslint --fix *.js",
+    "test": "npx mocha './{,!(node_modules)/**/}*.test.js' && npm run lint",
+    "test:watch": "npx mocha -R min --watch './src/**/*.test.js'",
+    "preversion": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jpg013/least-squares-regression.git"
+  },
+  "keywords": [
+    "linear",
+    "regression",
+    "least",
+    "squares"
+  ],
+  "author": "Justin Graber <jpg013@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpg013/least-squares-regression/issues"
+  },
+  "homepage": "https://github.com/jpg013/least-squares-regression#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "npx": "^10.2.0"
+  }
+}
