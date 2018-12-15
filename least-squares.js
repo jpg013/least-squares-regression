@@ -1,6 +1,6 @@
 function compose(...fns) {
   return fns.reduce((f, g) => (...args) => f(g(...args)));
-};
+}
 
 const sumDataPoints = (data=[]) => {
   if (!data || !Array.isArray(data)) {
@@ -19,7 +19,7 @@ const sumDataPoints = (data=[]) => {
       idx: acc.idx + 1,
     };
   }, { x: 0, y: 0, xx: 0, xy: 0, idx: 0 });
-}
+};
 
 const calculateSlope = (data={}) => {
   const num = (data.idx * data.xy) - (data.x * data.y);
@@ -29,7 +29,7 @@ const calculateSlope = (data={}) => {
     ...data,
     slope: (num / den)
   };
-}
+};
 
 const calculateIntercept = (data={}) => {
   const intercept = (data.y - (data.slope * data.x)) / data.idx;
@@ -37,23 +37,32 @@ const calculateIntercept = (data={}) => {
   return {
     ...data,
     intercept,
-  }
+  };
 };
 
 const assembleLineEquation = (data={}) => {
+  const { intercept, slope } = data;
+
+  const lineEquation = x => {
+    return {
+      x,
+      y: (slope * x) + intercept,
+    };
+  };
+
   return {
     ...data,
-    lineEquation: x => (data.slope * data.x) + data.intercept
-  }
-}
+    lineEquation,
+  };
+};
 
 const parseVal = (data={}) => {
   return {
     slope: data.slope,
     intercept: data.intercept,
     lineEquation: data.lineEquation,
-  }
-}
+  };
+};
 
 exports.leastSquares = compose(
   parseVal,

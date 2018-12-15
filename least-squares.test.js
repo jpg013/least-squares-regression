@@ -7,7 +7,7 @@ const dataSet = [
   { x: 5, y: 7, },
   { x: 7, y: 10, },
   { x: 9, y: 15, },
-]
+];
 
 describe('leastSquares', () => {
   it('exports', () => {
