@@ -27,11 +27,10 @@ describe('leastSquares', () => {
 
     assert.hasAllKeys(val, ['gradient', 'yIntercept', 'equation']);
     assert.isFunction(val.equation);
-  })
+  });
 
   it('calculates the correct value', () => {
     const val = leastSquares(dataSet);
-    console.log(val);
 
     assert.equal(val.gradient.toFixed(4), 1.5183);
     assert.equal(val.yIntercept.toFixed(4), 0.3049);
