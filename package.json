@@ -7,7 +7,7 @@
     "lint": "npx eslint *.js",
     "lint:fix": "npx eslint --fix *.js",
     "test": "npx mocha './{,!(node_modules)/**/}*.test.js' && npm run lint",
-    "test:watch": "npx mocha -R min --watch './src/**/*.test.js'",
+    "test:watch": "npx mocha -R min --watch './{,!(node_modules)/**/}*.test.js'",
     "preversion": "npm run test"
   },
   "repository": {
