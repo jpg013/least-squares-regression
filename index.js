@@ -1,1 +1,3 @@
-module.exports = require('./least-squares');
+const { leastSquares } = require('./least-squares');
+
+exports.leastSquares = leastSquares;

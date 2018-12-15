@@ -2,11 +2,11 @@ const { assert }       = require('chai');
 const { leastSquares } = require('./least-squares');
 
 const dataSet = [
-  { x: 2, y: 4, },
-  { x: 3, y: 5, },
-  { x: 5, y: 7, },
-  { x: 7, y: 10, },
-  { x: 9, y: 15, },
+  [2, 4],
+  [3, 5],
+  [5, 7],
+  [7, 10],
+  [9, 15],
 ];
 
 describe('leastSquares', () => {
@@ -14,11 +14,27 @@ describe('leastSquares', () => {
     assert.isFunction(leastSquares);
   });
 
-  it('calculates the correct value', () => {
+  it('handles invalid input values', () => {
+    const val = leastSquares(null);
+
+    assert.equal(val.gradient, 0);
+    assert.equal(val.yIntercept, 0);
+    assert.deepEqual(val.equation(0), { x: 0, y: 0 });
+  });
+
+  it('returns the correct object props', () => {
     const val = leastSquares(dataSet);
 
-    assert.equal(val.slope.toFixed(4), 1.5183);
-    assert.equal(val.intercept.toFixed(4), 0.3049);
-    assert.isFunction(val.lineEquation);
+    assert.hasAllKeys(val, ['gradient', 'yIntercept', 'equation']);
+    assert.isFunction(val.equation);
+  })
+
+  it('calculates the correct value', () => {
+    const val = leastSquares(dataSet);
+    console.log(val);
+
+    assert.equal(val.gradient.toFixed(4), 1.5183);
+    assert.equal(val.yIntercept.toFixed(4), 0.3049);
+    assert.isFunction(val.equation);
   });
 });

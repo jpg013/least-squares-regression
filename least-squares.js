@@ -3,13 +3,25 @@ function compose(...fns) {
 }
 
 const sumDataPoints = (data=[]) => {
+  const base = {
+    x: 0,
+    y: 0,
+    xx: 0,
+    xy: 0,
+    idx: 0
+  };
+
   if (!data || !Array.isArray(data)) {
-    throw new TypeError('least squares requires an array argument of { x, y } data points.');
+    return base;
   }
 
   return data.reduce((acc, curr) => {
-    const x = parseInt(curr && curr.x);
-    const y = parseInt(curr && curr.y);
+    if (!Array.isArray(curr)) {
+      return acc;
+    }
+
+    const x = parseInt(curr[0]);
+    const y = parseInt(curr[1]);
 
     return {
       x: acc.x + (isNaN(x) ? 0 : x),
@@ -18,61 +30,62 @@ const sumDataPoints = (data=[]) => {
       xy: acc.xy + ((isNaN(x) || isNaN(y)) ? 0 : x * y),
       idx: acc.idx + 1,
     };
-  }, { x: 0, y: 0, xx: 0, xy: 0, idx: 0 });
+  }, base);
 };
 
-const calculateSlope = (data={}) => {
+const calculateGradient = (data={}) => {
   const num = (data.idx * data.xy) - (data.x * data.y);
   const den = (data.idx * (data.xx)) - (Math.pow(data.x, 2));
 
   return {
     ...data,
-    slope: (num / den)
+    gradient: den > 0 ? (num / den) : 0
   };
 };
 
-const calculateIntercept = (data={}) => {
-  const intercept = (data.y - (data.slope * data.x)) / data.idx;
+const calculateYIntercept = (data={}) => {
+  const { y, gradient, x, idx } = data;
+  const yIntercept = idx > 0 ? (y - gradient * x) / idx : 0;
 
   return {
     ...data,
-    intercept,
+    yIntercept,
   };
 };
 
-const assembleLineEquation = (data={}) => {
-  const { intercept, slope } = data;
+const assembleEquation = (data={}) => {
+  const { yIntercept, gradient } = data;
 
-  const lineEquation = x => {
+  const equation = x => {
     return {
       x,
-      y: (slope * x) + intercept,
+      y: (gradient * x) + yIntercept,
     };
   };
 
   return {
     ...data,
-    lineEquation,
+    equation,
   };
 };
 
 const parseVal = (data={}) => {
   return {
-    slope: data.slope,
-    intercept: data.intercept,
-    lineEquation: data.lineEquation,
+    gradient: data.gradient,
+    yIntercept: data.yIntercept,
+    equation: data.equation,
   };
 };
 
 exports.leastSquares = compose(
   parseVal,
-  assembleLineEquation,
-  calculateIntercept,
-  calculateSlope,
+  assembleEquation,
+  calculateYIntercept,
+  calculateGradient,
   sumDataPoints,
 );
-exports.assembleLineEquation = assembleLineEquation;
+exports.assembleEquation = assembleEquation;
 exports.parseVal = parseVal;
 exports.sumDataPoints = sumDataPoints;
-exports.calculateSlope = calculateSlope;
-exports.calculateIntercept = calculateIntercept;
+exports.calculateGradient = calculateGradient;
+exports.calculateYIntercept = calculateYIntercept;

@@ -1,7 +1,7 @@
 {
-  "name": "least-squares-regression",
+  "name": "regression",
   "version": "1.0.0",
-  "description": "Module that calculates ordinary least squares regression.",
+  "description": "Nodejs module for performing linear least squares methods.",
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint *.js",

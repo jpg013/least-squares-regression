@@ -1,55 +1,55 @@
-least-squares-regression
+regression
 =============
 
-Nodejs Module for calculating ordinary least squares regression.
+Nodejs module for performing linear least squares methods.
 
 
 Install
 -------
 
 ### Node.js
-    npm install --save least-squares-regression
+    npm install --save regression
 
 Method
 -------
 
-### leastSquaresRegression(data)
+### regression(data)
 
 - returns an object with the following properties:
 
 props:
-- `slope`: slope of the least squares line
-- `intercept`: intercept of the least squares line
-- `lineEquation`: function that computes y = mx + b
+- `gradient`: slope of the least squares line
+- `yIntercept`: y intercept of the least squares line
+- `equation`: function that computes y = mx + b
 
 Example
 ------
 
 ```js
-const lsr = require('least-squares-regression');
+const regression = require('regression');
 
-const dataSet = [
-  { x: 2, y: 4, },
-  { x: 3, y: 5, },
-  { x: 5, y: 7, },
-  { x: 7, y: 10, },
-  { x: 9, y: 15, },
+const points = [
+  [2, 4],
+  [3, 5],
+  [5, 7],
+  [7, 10],
+  [9, 15],
 ];
 
-const results = lsr(dataSet);
+const results = regression.leastSquares(points);
 
 console.log(results);
 
 /*
 {
-  slope: 1.5182926829268293,
-  intercept: 0.30487804878048763,
-  lineEquation: [Function: lineEquation]
+  gradient: 1.5182926829268293,
+  yIntercept: 0.30487804878048763,
+  equation: [Function: equation]
 }
 */
 
-results.lineEquation(0) // { x: 0, y: 0.30487804878048763 }
-results.lineEquation(2) // { x: 2, y: 3.341463414634146 }
+results.equation(0) // { x: 0, y: 0.30487804878048763 }
+results.equation(2) // { x: 2, y: 3.341463414634146 }
 ```
 
 
